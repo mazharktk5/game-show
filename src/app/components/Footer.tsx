@@ -1,3 +1,38 @@
+import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+
+function SocialLinks() {
+    return (
+        <div className="flex items-center gap-4 mt-6">
+            <a
+                href="#"
+                className="p-2 rounded-full bg-[#F5E0A9]/10 hover:bg-gradient-to-r 
+        hover:from-[#F5E0A9] hover:to-[#D4AF37] hover:text-black 
+        transition shadow-md hover:shadow-[0_0_15px_rgba(212,175,55,0.5)]"
+            >
+                <FaFacebookF size={20} />
+            </a>
+
+            <a
+                href="#"
+                className="p-2 rounded-full bg-[#F5E0A9]/10 hover:bg-gradient-to-r 
+        hover:from-[#F5E0A9] hover:to-[#D4AF37] hover:text-black 
+        transition shadow-md hover:shadow-[0_0_15px_rgba(212,175,55,0.5)]"
+            >
+                <FaTwitter size={20} />
+            </a>
+
+            <a
+                href="#"
+                className="p-2 rounded-full bg-[#F5E0A9]/10 hover:bg-gradient-to-r 
+        hover:from-[#F5E0A9] hover:to-[#D4AF37] hover:text-black 
+        transition shadow-md hover:shadow-[0_0_15px_rgba(212,175,55,0.5)]"
+            >
+                <FaInstagram size={20} />
+            </a>
+        </div>
+    );
+}
+
 export default function Footer() {
     return (
         <footer className="relative bg-gradient-to-b from-gray-950 via-black to-yellow-950 text-gray-300 px-6 md:px-16 lg:px-24 xl:px-32 w-full overflow-hidden">
@@ -8,11 +43,10 @@ export default function Footer() {
             </div>
 
             <div className="relative z-10 flex flex-col md:flex-row items-start justify-between gap-12 py-16 border-b border-[#D4AF37]/20">
-
                 {/* Logo & Tagline */}
                 <div className="max-w-sm">
                     <h1 className="text-2xl md:text-3xl font-extrabold tracking-widest drop-shadow-lg 
-                        bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent">
+              bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent">
                         GAMER<span className="text-white">ZONE</span>
                     </h1>
                     <p className="mt-4 text-sm text-gray-400 leading-relaxed">
@@ -21,61 +55,38 @@ export default function Footer() {
                     </p>
 
                     {/* Social Icons */}
-                    <div className="flex items-center gap-4 mt-6">
-                        <a href="#" className="p-2 rounded-full bg-[#F5E0A9]/10 hover:bg-gradient-to-r hover:from-[#F5E0A9] hover:to-[#D4AF37] hover:text-black transition shadow-md hover:shadow-[0_0_15px_rgba(212,175,55,0.5)]">
-                            <svg width="20" height="20" fill="currentColor">
-                                <path d="M19.167 2.5a9.1..." />
-                            </svg>
-                        </a>
-                        <a href="#" className="p-2 rounded-full bg-[#F5E0A9]/10 hover:bg-gradient-to-r hover:from-[#F5E0A9] hover:to-[#D4AF37] hover:text-black transition shadow-md hover:shadow-[0_0_15px_rgba(212,175,55,0.5)]">
-                            <svg width="20" height="20" fill="currentColor">
-                                <path d="M7.5 15.833c-4.167..." />
-                            </svg>
-                        </a>
-                        <a href="#" className="p-2 rounded-full bg-[#F5E0A9]/10 hover:bg-gradient-to-r hover:from-[#F5E0A9] hover:to-[#D4AF37] hover:text-black transition shadow-md hover:shadow-[0_0_15px_rgba(212,175,55,0.5)]">
-                            <svg width="20" height="20" fill="currentColor">
-                                <path d="M13.333 6.667a5..." />
-                            </svg>
-                        </a>
-                    </div>
+                    <SocialLinks />
                 </div>
 
                 {/* Quick Links */}
                 <div className="w-full md:w-2/3 grid grid-cols-2 md:grid-cols-3 gap-8">
                     <div>
-                        <h2 className="font-bold text-sm mb-4 
-                            bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent">
-                            EXPLORE
-                        </h2>
-                        <ul className="text-sm space-y-2">
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Game Shows</a></li>
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Lucky Draws</a></li>
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Investments</a></li>
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Abroad Jobs</a></li>
+                        <h3 className="text-lg font-semibold mb-4 text-[#F5E0A9]">Explore</h3>
+                        <ul className="space-y-2 text-sm">
+                            <li><a href="/home" className="hover:text-[#D4AF37] transition">Home</a></li>
+                            <li><a href="/contact" className="hover:text-[#D4AF37] transition">About Us</a></li>
+                            <li><a href="#segments" className="hover:text-[#D4AF37] transition">Segments</a></li>
+
                         </ul>
                     </div>
+
                     <div>
-                        <h2 className="font-bold text-sm mb-4 
-                            bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent">
-                            COMMUNITY
-                        </h2>
-                        <ul className="text-sm space-y-2">
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Forums</a></li>
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Events</a></li>
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Workshops</a></li>
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Mentorship</a></li>
+                        <h3 className="text-lg font-semibold mb-4 text-[#F5E0A9]">Opportunities</h3>
+                        <ul className="space-y-2 text-sm">
+                            <li><a href="/segments/jobs" className="hover:text-[#D4AF37] transition">Job in Pakistan</a></li>
+                            <li><a href="/segments/jobs" className="hover:text-[#D4AF37] transition">Job Abroad</a></li>
+                            <li><a href="/segments/investment-abroad" className="hover:text-[#D4AF37] transition">Invest Abroad</a></li>
+
                         </ul>
                     </div>
+
                     <div>
-                        <h2 className="font-bold text-sm mb-4 
-                            bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent">
-                            SUPPORT
-                        </h2>
-                        <ul className="text-sm space-y-2">
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Help Center</a></li>
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Privacy</a></li>
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Terms</a></li>
-                            <li><a href="#" className="hover:text-[#F5E0A9] transition">Contact</a></li>
+                        <h3 className="text-lg font-semibold mb-4 text-[#F5E0A9]">Support</h3>
+                        <ul className="space-y-2 text-sm">
+                            <li><a href="/contact" className="hover:text-[#D4AF37] transition">Contact Us</a></li>
+                            <li><a href="/privacy" className="hover:text-[#D4AF37] transition">Privacy Policy</a></li>
+                            <li><a href="/privacy" className="hover:text-[#D4AF37] transition">Terms of Service</a></li>
+
                         </ul>
                     </div>
                 </div>

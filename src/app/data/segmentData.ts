@@ -2,14 +2,6 @@ export const segmentData: Record<
     string,
     { title: string; content: string; children?: { name: string; description: string }[] }
 > = {
-    "game-show": {
-        title: "Game Show",
-        content: "Participate in exciting challenges and competitions",
-    },
-    "lucky-draw": {
-        title: "Lucky Draw",
-        content: "Win amazing prizes in our lucky draw events",
-    },
     jobs: {
         title: "Jobs",
         content: "Explore job opportunities locally and abroad",
@@ -32,12 +24,21 @@ export const segmentData: Record<
             { name: "USA", description: "Establish connections in the USA" },
         ],
     },
+
     "investment-abroad": {
         title: "Investment / Visit Abroad",
-        content: "Discover investment and travel opportunities",
+        content: "Investment and travel opportunities abroad",
+        children: [
+            { name: "Investment Abroad", description: "Explore global investment opportunities" },
+            { name: "Visit Abroad", description: "Discover travel opportunities worldwide" },
+        ],
     },
     "scholar-entrepreneur": {
-        title: "Scholar / Entrepreneur",
-        content: "Educational and business development programs",
+        title: "Become a Scholar / Entrepreneur",
+        content: "Education and business programs to elevate your career",
+        children: [
+            { name: "Scholar Programs", description: "Access educational programs and scholarships" },
+            { name: "Entrepreneur Programs", description: "Join business development initiatives" },
+        ],
     },
 };

@@ -33,6 +33,8 @@ export default function RegisterPage() {
         "Company Representative (USA)",
     ];
 
+
+
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
@@ -70,7 +72,7 @@ export default function RegisterPage() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-4xl font-bold text-center text-yellow-400 drop-shadow-xl"
+                    className="text-4xl font-bold text-center bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent  drop-shadow-xl"
                 >
                     Registration Form
                 </motion.h2>
@@ -199,7 +201,10 @@ export default function RegisterPage() {
 
                         <button
                             type="submit"
-                            className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 rounded-lg transition"
+                            className="w-full bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] 
+                            hover:from-[#F5E0A9]/90 hover:to-[#D4AF37]/90
+                            shadow-[0_0_15px_rgba(212,175,55,0.7)] 
+                            duration-200 hover:bg-yellow-600 cursor-pointer text-gray-900 font-semibold py-3 rounded-lg transition"
                         >
                             Complete Registration
                         </button>

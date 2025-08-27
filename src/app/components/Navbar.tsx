@@ -22,18 +22,19 @@ export default function Navbar() {
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-10 font-medium">
-                    <Link href="/games" className="hover:text-yellow-400 transition">
-                        Games
+                    <Link href="/segments/jobs" className="hover:text-yellow-400 transition">
+                        Jobs
                     </Link>
-                    <Link href="/tournaments" className="hover:text-yellow-400 transition">
-                        Tournaments
+                    <Link href="/segments/company-representative" className="hover:text-yellow-400 transition">
+                        Representative
                     </Link>
-                    <Link href="/news" className="hover:text-yellow-400 transition">
-                        News
+                    <Link href="/contact" className="hover:text-yellow-400 transition">
+                        Contact Us
                     </Link>
-                    <Link href="/community" className="hover:text-yellow-400 transition">
-                        Community
-                    </Link>
+                    <a href="#segments" className="hover:text-yellow-400 transition">
+                        Segments
+                    </a>
+
                 </div>
 
                 {/* Join Now Button */}

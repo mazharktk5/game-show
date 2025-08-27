@@ -28,7 +28,7 @@ export default function Hero() {
                     transition={{ duration: 1, delay: 0.3 }}
                     className="mt-6 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto"
                 >
-                    Register now to participate in the <span className="text-yellow-400 font-semibold">Lucky Draw</span>
+                    Register now to participate in the <span className="bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent drop-shadow-md font-semibold">Lucky Draw </span>
                     and unlock amazing prizes. <br />
                     Your chance to win, explore opportunities, and take part in exciting events.
                 </motion.p>
