@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import Button from "./button";
 import Link from "next/link";
@@ -9,8 +8,7 @@ export default function Navbar() {
     const [open, setOpen] = useState(false);
 
     return (
-        <nav className="w-full fixed top-0 left-0 z-50 shadow-lg 
-        bg-gradient-to-r from-gray-800 via-gray-900 to-gray-900 text-gray-200">
+        <nav className="w-full fixed top-0 left-0 z-50 shadow-lg bg-gradient-to-r from-gray-800 via-gray-900 to-gray-900 text-gray-200">
             <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
                 {/* Logo */}
                 <Link
@@ -34,7 +32,6 @@ export default function Navbar() {
                     <a href="#segments" className="hover:text-yellow-400 transition">
                         Segments
                     </a>
-
                 </div>
 
                 {/* Join Now Button */}
@@ -56,20 +53,29 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu */}
+            {/* Mobile Menu */}
             {open && (
                 <div className="md:hidden flex flex-col bg-gray-900 px-6 py-4 gap-4 border-t border-yellow-500/30">
-                    <Link href="/games" className="hover:text-yellow-400">Games</Link>
-                    <Link href="/tournaments" className="hover:text-yellow-400">Tournaments</Link>
-                    <Link href="/news" className="hover:text-yellow-400">News</Link>
-                    <Link href="/community" className="hover:text-yellow-400">Community</Link>
-                    <Link href="/register">
+                    <Link href="/segments/jobs" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
+                        Jobs
+                    </Link>
+                    <Link href="/segments/company-representative" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
+                        Representative
+                    </Link>
+                    <Link href="/contact" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
+                        Contact Us
+                    </Link>
+                    <a href="#segments" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
+                        Segments
+                    </a>
+                    <Link href="/register" onClick={() => setOpen(false)}>
                         <Button className="w-full bg-yellow-400 text-black rounded-lg hover:bg-yellow-300">
                             Join Now
                         </Button>
                     </Link>
                 </div>
             )}
-        </nav>
 
+        </nav>
     );
 }
