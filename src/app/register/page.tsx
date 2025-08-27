@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -13,9 +15,11 @@ export default function RegisterPage() {
         code: "",
         receipt: "",
         cv: null as File | null,
-        paid: "", // new field for Lucky Draw
+        paid: "",
     });
     const [submitted, setSubmitted] = useState(false);
+    const formRef = useRef<HTMLFormElement>(null);
+    const router = useRouter();
 
     const segments = [
         "Lucky Draw",
@@ -33,8 +37,6 @@ export default function RegisterPage() {
         "Company Representative (USA)",
     ];
 
-
-
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
@@ -47,6 +49,8 @@ export default function RegisterPage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Validate required fields
         if (
             !formData.fullName ||
             !formData.cnic ||
@@ -54,13 +58,47 @@ export default function RegisterPage() {
             !formData.phone ||
             !formData.segment ||
             !formData.code ||
-            ((formData.segment === "Lucky Draw" && (!formData.paid || !formData.receipt)) ||
-                ((formData.segment === "Job in Pakistan" || formData.segment === "Job Abroad") && !formData.cv))
+            ((formData.segment === "Lucky Draw" &&
+                (!formData.paid || !formData.receipt)) ||
+                ((formData.segment === "Job in Pakistan" ||
+                    formData.segment === "Job Abroad") &&
+                    !formData.cv))
         ) {
             alert("Please fill all required fields.");
             return;
         }
-        setSubmitted(true);
+
+        if (!formRef.current) return;
+
+        // Send via EmailJS
+        emailjs
+            .sendForm(
+                "service_2fcnt5c", // Your service ID
+                "template_5swtl32", // Your template ID
+                formRef.current,
+                "uHJxD71AiMCXgTihs" // Your public key
+            )
+            .then(
+                () => {
+                    setSubmitted(true);
+                    formRef.current?.reset(); // clear inputs
+                    setFormData({
+                        fullName: "",
+                        cnic: "",
+                        email: "",
+                        phone: "",
+                        segment: "",
+                        code: "",
+                        receipt: "",
+                        cv: null,
+                        paid: "",
+                    });
+                },
+                (error) => {
+                    console.log("FAILED...", error.text);
+                    alert("Failed to send form. Please try again.");
+                }
+            );
     };
 
     return (
@@ -72,13 +110,14 @@ export default function RegisterPage() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-4xl font-bold text-center bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent  drop-shadow-xl"
+                    className="text-4xl font-bold text-center bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent drop-shadow-xl"
                 >
                     Registration Form
                 </motion.h2>
 
                 {!submitted ? (
                     <motion.form
+                        ref={formRef}
                         onSubmit={handleSubmit}
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -168,7 +207,7 @@ export default function RegisterPage() {
                             </div>
                         )}
 
-                        {(formData.segment === "Job in Pakistan" || formData.segment === "Job Abroad") && (
+                        {/* {(formData.segment === "Job in Pakistan" || formData.segment === "Job Abroad") && (
                             <div>
                                 <label className="block text-gray-300 font-semibold mb-2">
                                     Upload Your CV
@@ -182,9 +221,8 @@ export default function RegisterPage() {
                                     required
                                 />
                             </div>
-                        )}
+                        )} */}
 
-                        {/* Always shown fields */}
                         <input
                             type="text"
                             name="code"
@@ -226,6 +264,12 @@ export default function RegisterPage() {
                         <p className="text-gray-300 mt-2">
                             You will receive a confirmation email shortly.
                         </p>
+                        <button
+                            onClick={() => router.push("/")}
+                            className="mt-4 px-6 py-3 rounded-xl bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] text-gray-900 font-semibold hover:scale-105 transition-transform duration-300"
+                        >
+                            Back to Home
+                        </button>
                     </motion.div>
                 )}
             </div>
