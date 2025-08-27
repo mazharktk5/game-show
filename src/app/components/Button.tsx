@@ -13,12 +13,13 @@ export default function Button({ children, onClick, className }: ButtonProps) {
         <button
             onClick={onClick}
             className={`px-6 py-2 rounded-xl font-bold text-black 
-        bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 
-        hover:from-yellow-300 hover:to-yellow-500 
-        shadow-[0_0_15px_rgba(255,215,0,0.7)] 
-        transition duration-200 ${className || ""}`}
+    bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] 
+    hover:from-[#F5E0A9]/90 hover:to-[#D4AF37]/90
+    shadow-[0_0_15px_rgba(212,175,55,0.7)] 
+    transition duration-200 ${className || ""}`}
         >
             {children}
         </button>
+
     );
 }

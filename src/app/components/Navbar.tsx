@@ -1,15 +1,16 @@
 "use client";
 
-import Link from "next/link";
+
 import { useState } from "react";
 import Button from "./button";
+import Link from "next/link";
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
 
     return (
         <nav className="w-full fixed top-0 left-0 z-50 shadow-lg 
-        bg-[#0d0d0f] text-white border-b border-yellow-500/30">
+        bg-gradient-to-r from-gray-800 via-gray-900 to-gray-900 text-gray-200">
             <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
                 {/* Logo */}
                 <Link
@@ -20,7 +21,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop Links */}
-                <div className="hidden md:flex items-center gap-10 text-gray-200 font-medium">
+                <div className="hidden md:flex items-center gap-10 font-medium">
                     <Link href="/games" className="hover:text-yellow-400 transition">
                         Games
                     </Link>
@@ -38,7 +39,7 @@ export default function Navbar() {
                 {/* Join Now Button */}
                 <div className="hidden md:block">
                     <Link href="/register">
-                        <Button className="bg-yellow-400 text-black px-5 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition">
+                        <Button className="bg-yellow-400 text-black px-5 cursor-pointer py-2 rounded-lg font-semibold hover:bg-yellow-300 transition">
                             Join Now
                         </Button>
                     </Link>
@@ -55,19 +56,11 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             {open && (
-                <div className="md:hidden flex flex-col bg-[#141418] px-6 py-4 gap-4 border-t border-yellow-500/30">
-                    <Link href="/games" className="hover:text-yellow-400">
-                        Games
-                    </Link>
-                    <Link href="/tournaments" className="hover:text-yellow-400">
-                        Tournaments
-                    </Link>
-                    <Link href="/news" className="hover:text-yellow-400">
-                        News
-                    </Link>
-                    <Link href="/community" className="hover:text-yellow-400">
-                        Community
-                    </Link>
+                <div className="md:hidden flex flex-col bg-gray-900 px-6 py-4 gap-4 border-t border-yellow-500/30">
+                    <Link href="/games" className="hover:text-yellow-400">Games</Link>
+                    <Link href="/tournaments" className="hover:text-yellow-400">Tournaments</Link>
+                    <Link href="/news" className="hover:text-yellow-400">News</Link>
+                    <Link href="/community" className="hover:text-yellow-400">Community</Link>
                     <Link href="/register">
                         <Button className="w-full bg-yellow-400 text-black rounded-lg hover:bg-yellow-300">
                             Join Now
@@ -76,5 +69,6 @@ export default function Navbar() {
                 </div>
             )}
         </nav>
+
     );
 }

@@ -4,7 +4,7 @@ import Hero from "./components/Hero";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-950 font-sans">
+    <main className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-yellow-900 font-sans">
       {/* Hero Section */}
       <Hero />
       <ChooseSegments />

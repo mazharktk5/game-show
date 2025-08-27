@@ -1,4 +1,3 @@
-// app/register/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -14,6 +13,7 @@ export default function RegisterPage() {
         code: "",
         receipt: "",
         cv: null as File | null,
+        paid: "", // new field for Lucky Draw
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -52,8 +52,8 @@ export default function RegisterPage() {
             !formData.phone ||
             !formData.segment ||
             !formData.code ||
-            !formData.receipt ||
-            !formData.cv
+            ((formData.segment === "Lucky Draw" && (!formData.paid || !formData.receipt)) ||
+                ((formData.segment === "Job in Pakistan" || formData.segment === "Job Abroad") && !formData.cv))
         ) {
             alert("Please fill all required fields.");
             return;
@@ -128,14 +128,61 @@ export default function RegisterPage() {
                                 </option>
                             ))}
                         </select>
-                        <input
-                            type="file"
-                            name="cv"
-                            accept=".pdf,.doc,.docx"
-                            className="w-full text-gray-200"
-                            onChange={handleChange}
-                            required
-                        />
+
+                        {/* Conditional Fields */}
+                        {formData.segment === "Lucky Draw" && (
+                            <div className="space-y-2">
+                                <p className="text-gray-300 font-semibold">Have you paid the registration fee?</p>
+                                <div className="flex gap-4">
+                                    <label className="flex items-center gap-2">
+                                        <input
+                                            type="radio"
+                                            name="paid"
+                                            value="Yes"
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        Yes
+                                    </label>
+                                    <label className="flex items-center gap-2">
+                                        <input
+                                            type="radio"
+                                            name="paid"
+                                            value="No"
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        No
+                                    </label>
+                                </div>
+                                <input
+                                    type="text"
+                                    name="receipt"
+                                    placeholder="Receipt Number"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 focus:ring-2 focus:ring-yellow-400"
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        )}
+
+                        {(formData.segment === "Job in Pakistan" || formData.segment === "Job Abroad") && (
+                            <div>
+                                <label className="block text-gray-300 font-semibold mb-2">
+                                    Upload Your CV
+                                </label>
+                                <input
+                                    type="file"
+                                    name="cv"
+                                    accept=".pdf,.doc,.docx"
+                                    className="w-full text-gray-200"
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        )}
+
+                        {/* Always shown fields */}
                         <input
                             type="text"
                             name="code"
@@ -144,18 +191,12 @@ export default function RegisterPage() {
                             onChange={handleChange}
                             required
                         />
-                        <input
-                            type="text"
-                            name="receipt"
-                            placeholder="Receipt Number"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 focus:ring-2 focus:ring-yellow-400"
-                            onChange={handleChange}
-                            required
-                        />
+
                         <p className="text-sm text-gray-400">
                             Note: Send your payment receipt screenshot on WhatsApp to{" "}
                             <span className="text-yellow-400">+92XXXXXXXXX</span>
                         </p>
+
                         <button
                             type="submit"
                             className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 rounded-lg transition"

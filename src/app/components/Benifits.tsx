@@ -39,7 +39,10 @@ export default function Benefits() {
         <section className="bg-gradient-to-b from-black via-gray-900 to-black py-20 px-6 sm:px-12">
             <div className="max-w-6xl mx-auto text-center">
                 {/* Heading */}
-                <h2 className="text-3xl md:text-4xl font-bold text-yellow-400 mb-6">
+                <h2
+                    className="text-3xl md:text-4xl font-bold mb-6 
+                    bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent drop-shadow-xl"
+                >
                     Maximum Benefits Await You
                 </h2>
                 <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-12">
@@ -51,12 +54,18 @@ export default function Benefits() {
                     {benefits.map((item, index) => (
                         <div
                             key={index}
-                            className="group bg-gray-900/60 backdrop-blur-md rounded-2xl p-8 border border-yellow-500/20 hover:border-yellow-400 transition-all duration-300 hover:shadow-[0_0_25px_rgba(234,179,8,0.6)]"
+                            className="group bg-gray-900/60 backdrop-blur-md rounded-2xl p-8 
+                            border border-[#D4AF37]/40 hover:border-[#D4AF37] 
+                            transition-all duration-300 
+                            hover:shadow-[0_0_25px_rgba(212,175,55,0.5)]"
                         >
                             <div className="flex justify-center mb-6">
-                                <item.icon className="w-12 h-12 text-yellow-400 group-hover:scale-110 transition-transform duration-300" />
+                                <item.icon className="w-12 h-12 text-[#D4AF37] group-hover:scale-110 transition-transform duration-300" />
                             </div>
-                            <h3 className="text-xl font-semibold text-yellow-300 mb-3">
+                            <h3
+                                className="text-xl font-semibold mb-3
+                                bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent"
+                            >
                                 {item.title}
                             </h3>
                             <p className="text-gray-400 text-sm leading-relaxed">
@@ -67,16 +76,20 @@ export default function Benefits() {
                 </div>
 
                 {/* What You'll Get Section */}
-                <h3 className="text-2xl md:text-3xl font-bold text-yellow-400 mb-8">
+                <h3
+                    className="text-2xl md:text-3xl font-bold mb-8
+                    bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent"
+                >
                     What You'll Get
                 </h3>
                 <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto text-left">
                     {perks.map((perk, idx) => (
                         <li
                             key={idx}
-                            className="flex items-start space-x-3 bg-gray-900/50 p-4 rounded-xl border border-yellow-500/10 hover:border-yellow-400/40 transition"
+                            className="flex items-start space-x-3 bg-gray-900/50 p-4 rounded-xl 
+                            border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition"
                         >
-                            <CheckCircle2 className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
+                            <CheckCircle2 className="w-6 h-6 text-[#D4AF37] flex-shrink-0 mt-1" />
                             <span className="text-gray-300">{perk}</span>
                         </li>
                     ))}
