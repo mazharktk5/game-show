@@ -40,11 +40,12 @@ export default function Hero() {
                     transition={{ duration: 1, delay: 0.6 }}
                     className="mt-10 flex flex-wrap justify-center gap-6"
                 >
-                    <Link href="/register">
+                    <Link href="/register?segment=lucky-draw">
                         <Button className="bg-yellow-500 cursor-pointer text-black hover:bg-yellow-400 shadow-lg">
                             Register for Lucky Draw
                         </Button>
                     </Link>
+
                 </motion.div>
 
                 {/* Stats Section */}
