@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -13,13 +13,20 @@ export default function RegisterPage() {
         phone: "",
         segment: "",
         code: "",
-        receipt: "",
-        cv: null as File | null,
-        paid: "",
     });
     const [submitted, setSubmitted] = useState(false);
+    const [submittedSegment, setSubmittedSegment] = useState("");
     const formRef = useRef<HTMLFormElement>(null);
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const forcedSegment = searchParams.get("segment") === "lucky-draw";
+
+    useEffect(() => {
+        if (forcedSegment) {
+            setFormData((prev) => ({ ...prev, segment: "Lucky Draw" }));
+        }
+    }, [forcedSegment]);
 
     const segments = [
         "Lucky Draw",
@@ -40,58 +47,59 @@ export default function RegisterPage() {
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
-        const { name, value, files } = e.target as any;
+        const { name, value } = e.target as any;
         setFormData((prev) => ({
             ...prev,
-            [name]: files ? files[0] : value,
+            [name]: value,
         }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validate required fields
         if (
             !formData.fullName ||
             !formData.cnic ||
             !formData.email ||
             !formData.phone ||
             !formData.segment ||
-            !formData.code ||
-            ((formData.segment === "Lucky Draw" &&
-                (!formData.paid || !formData.receipt)) ||
-                ((formData.segment === "Job in Pakistan" ||
-                    formData.segment === "Job Abroad") &&
-                    !formData.cv))
+            !formData.code
         ) {
             alert("Please fill all required fields.");
             return;
         }
 
+        // Lucky Draw specific validation
+        if (formData.segment === "Lucky Draw") {
+            const paid = (formRef.current?.elements.namedItem("paid") as RadioNodeList)?.value;
+            const receipt = (formRef.current?.elements.namedItem("receipt") as HTMLInputElement)?.value;
+            if (!paid || !receipt) {
+                alert("Please complete Lucky Draw fields.");
+                return;
+            }
+        }
+
         if (!formRef.current) return;
 
-        // Send via EmailJS
         emailjs
             .sendForm(
-                "service_2fcnt5c", // Your service ID
-                "template_5swtl32", // Your template ID
+                "service_2fcnt5c",
+                "template_5swtl32",
                 formRef.current,
-                "uHJxD71AiMCXgTihs" // Your public key
+                "uHJxD71AiMCXgTihs"
             )
             .then(
                 () => {
+                    setSubmittedSegment(formData.segment);
                     setSubmitted(true);
-                    formRef.current?.reset(); // clear inputs
+                    formRef.current?.reset();
                     setFormData({
                         fullName: "",
                         cnic: "",
                         email: "",
                         phone: "",
-                        segment: "",
+                        segment: forcedSegment ? "Lucky Draw" : "",
                         code: "",
-                        receipt: "",
-                        cv: null,
-                        paid: "",
                     });
                 },
                 (error) => {
@@ -104,7 +112,6 @@ export default function RegisterPage() {
     return (
         <section className="relative py-20 bg-gradient-to-br from-gray-800 via-gray-900 to-yellow-900 text-white min-h-screen flex items-center">
             <div className="absolute inset-0 bg-black/40"></div>
-
             <div className="relative z-10 max-w-2xl mx-auto px-6 w-full">
                 <motion.h2
                     initial={{ opacity: 0, y: 40 }}
@@ -124,11 +131,12 @@ export default function RegisterPage() {
                         transition={{ duration: 0.8, delay: 0.3 }}
                         className="mt-10 space-y-4 bg-gray-900/60 border border-yellow-500/30 shadow-lg rounded-2xl p-8"
                     >
+                        {/* FIXED fullName field */}
                         <input
                             type="text"
                             name="fullName"
                             placeholder="Full Name"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 focus:ring-2 focus:ring-yellow-400"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
                             onChange={handleChange}
                             required
                         />
@@ -136,7 +144,7 @@ export default function RegisterPage() {
                             type="text"
                             name="cnic"
                             placeholder="CNIC / Passport Number"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 focus:ring-2 focus:ring-yellow-400"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
                             onChange={handleChange}
                             required
                         />
@@ -144,7 +152,7 @@ export default function RegisterPage() {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 focus:ring-2 focus:ring-yellow-400"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
                             onChange={handleChange}
                             required
                         />
@@ -152,35 +160,47 @@ export default function RegisterPage() {
                             type="tel"
                             name="phone"
                             placeholder="Phone Number"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 focus:ring-2 focus:ring-yellow-400"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
                             onChange={handleChange}
                             required
                         />
-                        <select
-                            name="segment"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 focus:ring-2 focus:ring-yellow-400"
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="">Select Segment</option>
-                            {segments.map((seg) => (
-                                <option key={seg} value={seg}>
-                                    {seg}
-                                </option>
-                            ))}
-                        </select>
 
-                        {/* Conditional Fields */}
+                        {/* Segment selection */}
+                        {forcedSegment ? (
+                            <input
+                                type="hidden"
+                                name="segment"
+                                value="Lucky Draw"
+                            />
+                        ) : (
+                            <select
+                                name="segment"
+                                className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none focus:bg-gray-800 focus:ring-0"
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Select Segment</option>
+                                {segments.filter((seg) => seg !== "Lucky Draw")
+                                    .map((seg) => (
+                                        <option key={seg} value={seg}>
+                                            {seg}
+                                        </option>
+                                    ))}
+                            </select>
+                        )}
+
+                        {/* Lucky Draw extra fields */}
                         {formData.segment === "Lucky Draw" && (
                             <div className="space-y-2">
-                                <p className="text-gray-300 font-semibold">Have you paid the registration fee?</p>
+                                <p className="text-gray-300 font-semibold">
+                                    Have you paid the registration fee?
+                                </p>
                                 <div className="flex gap-4">
                                     <label className="flex items-center gap-2">
                                         <input
                                             type="radio"
                                             name="paid"
                                             value="Yes"
-                                            onChange={handleChange}
                                             required
                                         />
                                         Yes
@@ -190,7 +210,6 @@ export default function RegisterPage() {
                                             type="radio"
                                             name="paid"
                                             value="No"
-                                            onChange={handleChange}
                                             required
                                         />
                                         No
@@ -200,34 +219,17 @@ export default function RegisterPage() {
                                     type="text"
                                     name="receipt"
                                     placeholder="Receipt Number"
-                                    className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 focus:ring-2 focus:ring-yellow-400"
-                                    onChange={handleChange}
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
                                     required
                                 />
                             </div>
                         )}
 
-                        {/* {(formData.segment === "Job in Pakistan" || formData.segment === "Job Abroad") && (
-                            <div>
-                                <label className="block text-gray-300 font-semibold mb-2">
-                                    Upload Your CV
-                                </label>
-                                <input
-                                    type="file"
-                                    name="cv"
-                                    accept=".pdf,.doc,.docx"
-                                    className="w-full text-gray-200"
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        )} */}
-
                         <input
                             type="text"
                             name="code"
                             placeholder="Unique Code"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 focus:ring-2 focus:ring-yellow-400"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
                             onChange={handleChange}
                             required
                         />
@@ -240,9 +242,9 @@ export default function RegisterPage() {
                         <button
                             type="submit"
                             className="w-full bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] 
-                            hover:from-[#F5E0A9]/90 hover:to-[#D4AF37]/90
-                            shadow-[0_0_15px_rgba(212,175,55,0.7)] 
-                            duration-200 hover:bg-yellow-600 cursor-pointer text-gray-900 font-semibold py-3 rounded-lg transition"
+              hover:from-[#F5E0A9]/90 hover:to-[#D4AF37]/90
+              shadow-[0_0_15px_rgba(212,175,55,0.7)] 
+              duration-200 hover:bg-yellow-600 cursor-pointer text-gray-900 font-semibold py-3 rounded-lg transition"
                         >
                             Complete Registration
                         </button>
@@ -257,10 +259,17 @@ export default function RegisterPage() {
                         <h2 className="text-lg font-semibold text-green-400">
                             ✅ Your response has been submitted
                         </h2>
-                        <p className="text-gray-300 mt-2">
-                            Please send the payment screenshot to{" "}
-                            <span className="text-yellow-400">+92XXXXXXXXX</span>
-                        </p>
+                        {submittedSegment === "Lucky Draw" ? (
+                            <p className="text-gray-300 mt-2">
+                                Please send the payment screenshot to{" "}
+                                <span className="text-yellow-400">+92XXXXXXXXX</span>
+                            </p>
+                        ) : (
+                            <p className="text-gray-300 mt-2">
+                                Please send your resume to{" "}
+                                <span className="text-yellow-400">jobs@example.com</span>
+                            </p>
+                        )}
                         <p className="text-gray-300 mt-2">
                             You will receive a confirmation email shortly.
                         </p>
