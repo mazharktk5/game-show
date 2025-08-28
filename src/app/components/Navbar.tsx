@@ -29,16 +29,16 @@ export default function Navbar() {
                     <Link href="/contact" className="hover:text-yellow-400 transition">
                         Contact Us
                     </Link>
-                    <a href="#segments" className="hover:text-yellow-400 transition">
+                    <Link href="/#segments" className="hover:text-yellow-400 transition">
                         Segments
-                    </a>
+                    </Link>
                 </div>
 
-                {/* Join Now Button */}
+                {/* Register Now Button */}
                 <div className="hidden md:block">
                     <Link href="/register">
                         <Button className="bg-yellow-400 text-black px-5 cursor-pointer py-2 rounded-lg font-semibold hover:bg-yellow-300 transition">
-                            Join Now
+                            Register Now
                         </Button>
                     </Link>
                 </div>
@@ -65,12 +65,12 @@ export default function Navbar() {
                     <Link href="/contact" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
                         Contact Us
                     </Link>
-                    <a href="#segments" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
+                    <a href="/#segments" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
                         Segments
                     </a>
                     <Link href="/register" onClick={() => setOpen(false)}>
                         <Button className="w-full bg-yellow-400 text-black rounded-lg hover:bg-yellow-300">
-                            Join Now
+                            Register Now
                         </Button>
                     </Link>
                 </div>
