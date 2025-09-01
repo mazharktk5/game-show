@@ -1,21 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "./button";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "../assets/logo.png";
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
+    const [show, setShow] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    // Handle scroll behavior
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > lastScrollY) {
+                // scrolling down → hide
+                setShow(false);
+            } else {
+                // scrolling up → show
+                setShow(true);
+            }
+            setLastScrollY(window.scrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [lastScrollY]);
 
     return (
-        <nav className="w-full fixed top-0 left-0 z-50 shadow-lg bg-gradient-to-r from-gray-800 via-gray-900 to-gray-900 text-gray-200">
-            <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+        <nav
+            className={`w-full fixed top-0 left-0 z-50 shadow-lg bg-gradient-to-r from-gray-800 via-gray-900 to-gray-900 text-gray-200 h-20 transition-transform duration-300 ${show ? "translate-y-0" : "-translate-y-full"
+                }`}
+        >
+            <div className="max-w-7xl mx-auto flex justify-between items-center px-6 h-full">
                 {/* Logo */}
-                <Link
-                    href="/"
-                    className="text-2xl font-extrabold tracking-wider text-yellow-400"
-                >
-                    ✨ GameZone
+                <Link href="/" className="flex items-center h-full">
+                    <Image
+                        src={logo}
+                        alt="Logo"
+                        className="h-20 w-auto object-contain"
+                        priority
+                    />
+                    <span className="ml-2 text-2xl font-extrabold tracking-wider text-yellow-400">
+                        GameShow
+                    </span>
                 </Link>
 
                 {/* Desktop Links */}
@@ -53,7 +85,6 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu */}
-            {/* Mobile Menu */}
             {open && (
                 <div className="md:hidden flex flex-col bg-gray-900 px-6 py-4 gap-4 border-t border-yellow-500/30">
                     <Link href="/segments/jobs" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
@@ -65,9 +96,9 @@ export default function Navbar() {
                     <Link href="/contact" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
                         Contact Us
                     </Link>
-                    <a href="/#segments" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
+                    <Link href="/#segments" className="hover:text-yellow-400" onClick={() => setOpen(false)}>
                         Segments
-                    </a>
+                    </Link>
                     <Link href="/register" onClick={() => setOpen(false)}>
                         <Button className="w-full bg-yellow-400 text-black rounded-lg hover:bg-yellow-300">
                             Register Now
@@ -75,7 +106,6 @@ export default function Navbar() {
                     </Link>
                 </div>
             )}
-
         </nav>
     );
 }
