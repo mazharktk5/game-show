@@ -45,7 +45,7 @@ export default function Navbar() {
                         className="h-20 w-auto object-contain"
                         priority
                     />
-                    <span className="ml-2 text-2xl font-extrabold tracking-wider text-yellow-400">
+                    <span className="ml-2 text-2xl font-extrabold tracking-wider text-[#F5E0A9]">
                         GameShow
                     </span>
                 </Link>
