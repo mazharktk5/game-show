@@ -1,4 +1,7 @@
 import SocialLinks from "./socialLinks";
+import Image from "next/image";
+import logo from "../assets/logo.png";
+import Link from "next/link";
 
 export default function Footer() {
     return (
@@ -9,68 +12,71 @@ export default function Footer() {
                 <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#D4AF37]/10 blur-3xl rounded-full"></div>
             </div>
 
-            <div className="relative z-10 flex flex-col md:flex-row items-start justify-between gap-12 py-16 border-b border-[#D4AF37]/20">
+            <div className="relative z-10 flex flex-col md:flex-row md:items-start justify-between gap-12 py-16 border-b border-[#D4AF37]/20">
                 {/* Logo & Tagline */}
-                <div className="max-w-sm">
-                    <h1 className="text-2xl md:text-3xl font-extrabold tracking-widest drop-shadow-lg 
-              bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent">
-                        GAMER<span className="text-white">ZONE</span>
-                    </h1>
+                <div className="flex-1">
+                    <Link href="/" className="flex items-center">
+                        <Image
+                            src={logo}
+                            alt="Logo"
+                            className="h-20 w-auto object-contain"
+                            priority
+                        />
+                        <span className="ml-2 text-2xl font-extrabold tracking-wider text-[#F5E0A9]">
+                            GameShow
+                        </span>
+                    </Link>
                     <p className="mt-4 text-sm text-gray-400 leading-relaxed">
                         Level up your career, win big in events, and unlock global
                         opportunities — all in one place.
                     </p>
 
                     {/* Social Icons */}
-                    <SocialLinks />
+                    <div className="mt-6">
+                        <SocialLinks />
+                    </div>
                 </div>
 
                 {/* Quick Links */}
-                <div className="w-full md:w-2/3 grid grid-cols-2 md:grid-cols-3 gap-8">
+                <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-8">
                     <div>
                         <h3 className="text-lg font-semibold mb-4 text-[#F5E0A9]">Contact Details</h3>
-                        <ul className="space-y-2 text-sm">
-                            <li>
-                                <span className="block text-gray-300">123 Main Street, Islamabad, Pakistan</span>
-                            </li>
-                            <li>
-                                <span className="block text-gray-300">+92 300 1234567</span>
-                            </li>
-                            <li>
-                                <a href="mailto:info@example.com" className="hover:text-[#D4AF37] transition">
-                                    info@example.com
-                                </a>
-                            </li>
-                        </ul>
+                        <address className="not-italic space-y-2 text-sm">
+                            <p className="text-gray-300">123 Main Street, Islamabad, Pakistan</p>
+                            <a href="tel:+923001234567" className="block hover:text-[#D4AF37] transition">
+                                +92 300 1234567
+                            </a>
+                            <a href="mailto:info@example.com" className="block hover:text-[#D4AF37] transition">
+                                info@example.com
+                            </a>
+                        </address>
                     </div>
-
 
                     <div>
                         <h3 className="text-lg font-semibold mb-4 text-[#F5E0A9]">Opportunities</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="/segments/jobs" className="hover:text-[#D4AF37] transition">Job in Pakistan</a></li>
-                            <li><a href="/segments/jobs" className="hover:text-[#D4AF37] transition">Job Abroad</a></li>
-                            <li><a href="/segments/investment-abroad" className="hover:text-[#D4AF37] transition">Invest Abroad</a></li>
-
+                            <li><Link href="/segments/jobs" className="hover:text-[#D4AF37] transition">Job in Pakistan</Link></li>
+                            <li><Link href="/segments/jobs" className="hover:text-[#D4AF37] transition">Job Abroad</Link></li>
+                            <li><Link href="/segments/investment-abroad" className="hover:text-[#D4AF37] transition">Invest Abroad</Link></li>
                         </ul>
                     </div>
 
                     <div>
                         <h3 className="text-lg font-semibold mb-4 text-[#F5E0A9]">Support</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="/contact" className="hover:text-[#D4AF37] transition">Contact Us</a></li>
-                            <li><a href="/privacy" className="hover:text-[#D4AF37] transition">Privacy Policy</a></li>
-                            <li><a href="/privacy" className="hover:text-[#D4AF37] transition">Terms of Service</a></li>
-
+                            <li><Link href="/contact" className="hover:text-[#D4AF37] transition">Contact Us</Link></li>
+                            <li><Link href="/privacy" className="hover:text-[#D4AF37] transition">Privacy Policy</Link></li>
+                            <li><Link href="/terms" className="hover:text-[#D4AF37] transition">Terms of Service</Link></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
+
             {/* Bottom bar */}
             <div className="relative z-10 py-6 text-center">
                 <p className="text-xs md:text-sm text-gray-500">
-                    © {new Date().getFullYear()} GamerZone. All Rights Reserved.
+                    © {new Date().getFullYear()} GameShow. All Rights Reserved.
                 </p>
             </div>
         </footer>
