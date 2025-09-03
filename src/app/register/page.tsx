@@ -257,7 +257,7 @@ export default function RegisterPage() {
                         className="mt-12 text-center bg-gray-900/60 border border-green-500/30 p-8 rounded-2xl shadow-lg"
                     >
                         <h2 className="text-lg font-semibold text-green-400">
-                            ✅ Your response has been submitted
+                            Your response has been submitted
                         </h2>
                         {submittedSegment === "Lucky Draw" ? (
                             <p className="text-gray-300 mt-2">
