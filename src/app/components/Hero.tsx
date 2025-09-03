@@ -7,8 +7,6 @@ import Image from "next/image";
 import finalbgimage from "../assets/finalbg-image.png";
 
 export default function Hero() {
-
-
     return (
         <section className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-800 via-gray-900 to-yellow-900 text-white overflow-hidden pt-20 md:pt-0">
             {/* Overlay */}
@@ -21,11 +19,17 @@ export default function Hero() {
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent drop-shadow-xl"
+                        className="text-5xl md:text-6xl font-extrabold leading-tight drop-shadow-xl"
                     >
-                        Participate in{" "}
-                        <span className="text-white">KPK Game Show</span>
+                        <span className="whitespace-nowrap bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent">
+                            Participate in KPK’s Biggest
+                        </span>
+                        <span className="block text-white">Game Show</span>
                     </motion.h1>
+
+
+
+
 
                     <motion.p
                         initial={{ opacity: 0, y: 30 }}
@@ -37,22 +41,28 @@ export default function Hero() {
                         <span className="bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent drop-shadow-md font-semibold">
                             Lucky Draw
                         </span>{" "}
-                        and unlock amazing prizes. <br />
-                        Your chance to win, explore opportunities, and take part in
-                        exciting events.
+                        and unlock amazing prizes. <br /> Your chance to win, explore
+                        opportunities, and take part in exciting events.
                     </motion.p>
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.6 }}
-                        className="flex flex-wrap gap-6"
+                        className="flex flex-col gap-4"
                     >
                         <Link href="/register?segment=lucky-draw">
                             <Button className="bg-yellow-500 cursor-pointer text-black hover:bg-yellow-400 shadow-lg">
                                 Register for Lucky Draw
                             </Button>
                         </Link>
+
+                        {/* Discount Line */}
+                        <p className="text-sm md:text-base font-medium text-yellow-400 drop-shadow-md">
+                            Early birds get an exclusive{" "}
+                            <span className="font-bold text-white">20% discount</span>!
+                        </p>
+
                     </motion.div>
 
                     {/* Stats */}

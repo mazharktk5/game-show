@@ -23,7 +23,7 @@ export default function ContactUs() {
             .then(
                 () => {
                     setSubmitted(true);
-                    form.current?.reset(); // clear inputs
+                    form.current?.reset();
                 },
                 (error) => {
                     console.log("FAILED...", error.text);

@@ -21,7 +21,7 @@ const segments = [
 ];
 
 // Segments that will be clickable links
-const linkedSegments = ["jobs", "company-representative", "investment-abroad", "scholar-entrepreneur"];
+const linkedSegments = ["jobs", "game-show", "lucky-draw", "company-representative", "investment-abroad", "scholar-entrepreneur"];
 
 export default function ChooseSegments() {
 
