@@ -16,13 +16,17 @@ export default function RegisterPage() {
     });
     const [submitted, setSubmitted] = useState(false);
     const [submittedSegment, setSubmittedSegment] = useState("");
+    const [hasReferral, setHasReferral] = useState<string>("");
+    const [referralCount, setReferralCount] = useState<string>("");
+
     const formRef = useRef<HTMLFormElement>(null);
     const router = useRouter();
     const searchParams = useSearchParams();
 
     // detect segment from query
     const forcedGameShow = searchParams.get("segment") === "game-show";
-    const forcedCompanyRep = searchParams.get("segment") === "company-representative";
+    const forcedCompanyRep =
+        searchParams.get("segment") === "company-representative";
 
     useEffect(() => {
         if (forcedGameShow) {
@@ -42,6 +46,7 @@ export default function RegisterPage() {
         "Company Representative (Middle East)",
         "Company Representative (Europe)",
         "Company Representative (USA)",
+        "Game Show",
     ];
 
     const handleChange = (
@@ -71,10 +76,21 @@ export default function RegisterPage() {
 
         // Game Show specific validation
         if (formData.segment === "Game Show") {
-            const paid = (formRef.current?.elements.namedItem("paid") as RadioNodeList)?.value;
-            const receipt = (formRef.current?.elements.namedItem("receipt") as HTMLInputElement)?.value;
+            const paid = (formRef.current?.elements.namedItem("paid") as RadioNodeList)
+                ?.value;
+            const receipt = (
+                formRef.current?.elements.namedItem("receipt") as HTMLInputElement
+            )?.value;
             if (!paid || !receipt) {
                 alert("Please complete Game Show payment fields.");
+                return;
+            }
+            if (!hasReferral) {
+                alert("Please confirm if you have referrals.");
+                return;
+            }
+            if (hasReferral === "Yes" && !referralCount) {
+                alert("Please select referral count (10, 20, or 30).");
                 return;
             }
         }
@@ -105,6 +121,8 @@ export default function RegisterPage() {
                                 : "",
                         code: "",
                     });
+                    setHasReferral("");
+                    setReferralCount("");
                 },
                 (error) => {
                     console.log("FAILED...", error.text);
@@ -168,11 +186,15 @@ export default function RegisterPage() {
                             required
                         />
 
-                        {/* Forced Game Show */}
+                        {/* Forced segments */}
                         {forcedGameShow ? (
                             <input type="hidden" name="segment" value="Game Show" />
                         ) : forcedCompanyRep ? (
-                            <input type="hidden" name="segment" value="Company Representative" />
+                            <input
+                                type="hidden"
+                                name="segment"
+                                value="Company Representative"
+                            />
                         ) : (
                             <select
                                 name="segment"
@@ -191,18 +213,16 @@ export default function RegisterPage() {
 
                         {/* Game Show extra fields */}
                         {formData.segment === "Game Show" && (
-                            <div className="space-y-2">
+                            <div className="space-y-4">
                                 <p className="text-gray-300 font-semibold">
                                     Have you paid the registration fee?
                                 </p>
                                 <div className="flex gap-4">
                                     <label className="flex items-center gap-2">
-                                        <input type="radio" name="paid" value="Yes" required />
-                                        Yes
+                                        <input type="radio" name="paid" value="Yes" required /> Yes
                                     </label>
                                     <label className="flex items-center gap-2">
-                                        <input type="radio" name="paid" value="No" required />
-                                        No
+                                        <input type="radio" name="paid" value="No" required /> No
                                     </label>
                                 </div>
                                 <input
@@ -212,6 +232,50 @@ export default function RegisterPage() {
                                     className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none"
                                     required
                                 />
+
+                                {/* Referral Section */}
+                                <p className="text-gray-300 font-semibold">
+                                    Do you have referrals?
+                                </p>
+                                <div className="flex gap-4">
+                                    <label className="flex items-center gap-2">
+                                        <input
+                                            type="radio"
+                                            name="hasReferral"
+                                            value="Yes"
+                                            checked={hasReferral === "Yes"}
+                                            onChange={() => setHasReferral("Yes")}
+                                            required
+                                        />
+                                        Yes
+                                    </label>
+                                    <label className="flex items-center gap-2">
+                                        <input
+                                            type="radio"
+                                            name="hasReferral"
+                                            value="No"
+                                            checked={hasReferral === "No"}
+                                            onChange={() => setHasReferral("No")}
+                                            required
+                                        />
+                                        No
+                                    </label>
+                                </div>
+
+                                {hasReferral === "Yes" && (
+                                    <select
+                                        name="referralCount"
+                                        className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none"
+                                        value={referralCount}
+                                        onChange={(e) => setReferralCount(e.target.value)}
+                                        required
+                                    >
+                                        <option value="">Select Referral Count</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                    </select>
+                                )}
                             </div>
                         )}
 
@@ -246,8 +310,10 @@ export default function RegisterPage() {
                         </h2>
                         {submittedSegment === "Game Show" ? (
                             <p className="text-gray-300 mt-2">
-                                Please send the payment screenshot to{" "}
-                                <span className="text-yellow-400">+92XXXXXXXXX</span>
+                                Please send the payment screenshot{" "}
+                                {hasReferral === "Yes" &&
+                                    `(with referral persons’ names & numbers for ${referralCount} people)`}{" "}
+                                to <span className="text-yellow-400">+92XXXXXXXXX</span>
                             </p>
                         ) : (
                             <p className="text-gray-300 mt-2">

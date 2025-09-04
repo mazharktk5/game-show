@@ -59,7 +59,7 @@ export default function LuckyDrawPage() {
                     transition={{ duration: 1, delay: 0.6 }}
                     className="mt-12"
                 >
-                    <Link href="/register?segment=lucky-draw">
+                    <Link href="/register?segment=game-show">
                         <button className="px-10 py-4 text-lg font-bold rounded-2xl bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] text-black shadow-xl hover:scale-105 transition duration-300">
                             Enter the Lucky Draw
                         </button>

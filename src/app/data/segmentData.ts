@@ -26,13 +26,19 @@ export const segmentData: Record<
     },
 
     "investment-abroad": {
-        title: "Investment / Visit Abroad",
-        content: "Investment and travel opportunities abroad",
-        children: [
-            { name: "Investment Abroad", description: "Explore global investment opportunities" },
-            { name: "Visit Abroad", description: "Discover travel opportunities worldwide" },
-        ],
-    },
+        "title": "Investment / Visit Abroad",
+        "content": "Investment, travel, and visa opportunities abroad",
+        "children": [
+            { "name": "Investment Abroad", "description": "Explore global investment opportunities" },
+            { "name": "Visit Abroad", "description": "Discover travel opportunities worldwide" },
+            { "name": "Employment Visa", "description": "Guidance and support for employment visa applications" },
+            { "name": "Work Visa", "description": "Assistance with international work visa processes" },
+            { "name": "Visit Visa", "description": "Step-by-step support for short-term travel visas" },
+            { "name": "Application Filling", "description": "Professional help with accurate visa form completion" },
+            { "name": "Visa Interview Preparation", "description": "Coaching and tips to succeed in visa interviews" }
+        ]
+    }
+    ,
     "scholar-entrepreneur": {
         title: "Become a Scholar / Entrepreneur",
         content: "Education and business programs to elevate your career",

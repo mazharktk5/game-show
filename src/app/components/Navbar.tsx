@@ -52,18 +52,25 @@ export default function Navbar() {
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-10 font-medium">
-                    <Link href="/segments/jobs" className="hover:text-yellow-400 transition">
+                    {/* <Link href="/segments/jobs" className="hover:text-yellow-400 transition">
                         Jobs
+                    </Link> */}
+                    <Link href="/#segments" className="hover:text-yellow-400 transition">
+                        Segments
                     </Link>
+
+
                     <Link href="/segments/company-representative" className="hover:text-yellow-400 transition">
                         Representative
+                    </Link>
+
+                    <Link href="/about" className="hover:text-yellow-400 transition">
+                        About Us
                     </Link>
                     <Link href="/contact" className="hover:text-yellow-400 transition">
                         Contact Us
                     </Link>
-                    <Link href="/#segments" className="hover:text-yellow-400 transition">
-                        Segments
-                    </Link>
+
                 </div>
 
                 {/* Register Now Button */}
