@@ -20,20 +20,20 @@ export default function RegisterPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const forcedSegment = searchParams.get("segment") === "lucky-draw";
+    // detect segment from query
+    const forcedGameShow = searchParams.get("segment") === "game-show";
+    const forcedCompanyRep = searchParams.get("segment") === "company-representative";
 
     useEffect(() => {
-        if (forcedSegment) {
-            setFormData((prev) => ({ ...prev, segment: "Lucky Draw" }));
+        if (forcedGameShow) {
+            setFormData((prev) => ({ ...prev, segment: "Game Show" }));
         }
-    }, [forcedSegment]);
+        if (forcedCompanyRep) {
+            setFormData((prev) => ({ ...prev, segment: "Company Representative" }));
+        }
+    }, [forcedGameShow, forcedCompanyRep]);
 
     const segments = [
-        "Lucky Draw",
-        "Job in Pakistan",
-        "Job Abroad",
-        "Investment / Visit Abroad",
-        "Become a Scholar / Entrepreneur",
         "Company Representative (KPK)",
         "Company Representative (Punjab)",
         "Company Representative (Sindh)",
@@ -69,12 +69,12 @@ export default function RegisterPage() {
             return;
         }
 
-        // Lucky Draw specific validation
-        if (formData.segment === "Lucky Draw") {
+        // Game Show specific validation
+        if (formData.segment === "Game Show") {
             const paid = (formRef.current?.elements.namedItem("paid") as RadioNodeList)?.value;
             const receipt = (formRef.current?.elements.namedItem("receipt") as HTMLInputElement)?.value;
             if (!paid || !receipt) {
-                alert("Please complete Lucky Draw fields.");
+                alert("Please complete Game Show payment fields.");
                 return;
             }
         }
@@ -98,7 +98,11 @@ export default function RegisterPage() {
                         cnic: "",
                         email: "",
                         phone: "",
-                        segment: forcedSegment ? "Lucky Draw" : "",
+                        segment: forcedGameShow
+                            ? "Game Show"
+                            : forcedCompanyRep
+                                ? "Company Representative"
+                                : "",
                         code: "",
                     });
                 },
@@ -131,12 +135,11 @@ export default function RegisterPage() {
                         transition={{ duration: 0.8, delay: 0.3 }}
                         className="mt-10 space-y-4 bg-gray-900/60 border border-yellow-500/30 shadow-lg rounded-2xl p-8"
                     >
-                        {/* FIXED fullName field */}
                         <input
                             type="text"
                             name="fullName"
                             placeholder="Full Name"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none"
                             onChange={handleChange}
                             required
                         />
@@ -144,7 +147,7 @@ export default function RegisterPage() {
                             type="text"
                             name="cnic"
                             placeholder="CNIC / Passport Number"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none"
                             onChange={handleChange}
                             required
                         />
@@ -152,7 +155,7 @@ export default function RegisterPage() {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none"
                             onChange={handleChange}
                             required
                         />
@@ -160,58 +163,45 @@ export default function RegisterPage() {
                             type="tel"
                             name="phone"
                             placeholder="Phone Number"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none"
                             onChange={handleChange}
                             required
                         />
 
-                        {/* Segment selection */}
-                        {forcedSegment ? (
-                            <input
-                                type="hidden"
-                                name="segment"
-                                value="Lucky Draw"
-                            />
+                        {/* Forced Game Show */}
+                        {forcedGameShow ? (
+                            <input type="hidden" name="segment" value="Game Show" />
+                        ) : forcedCompanyRep ? (
+                            <input type="hidden" name="segment" value="Company Representative" />
                         ) : (
                             <select
                                 name="segment"
-                                className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none focus:bg-gray-800 focus:ring-0"
+                                className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none"
                                 onChange={handleChange}
                                 required
                             >
                                 <option value="">Select Segment</option>
-                                {segments.filter((seg) => seg !== "Lucky Draw")
-                                    .map((seg) => (
-                                        <option key={seg} value={seg}>
-                                            {seg}
-                                        </option>
-                                    ))}
+                                {segments.map((seg) => (
+                                    <option key={seg} value={seg}>
+                                        {seg}
+                                    </option>
+                                ))}
                             </select>
                         )}
 
-                        {/* Lucky Draw extra fields */}
-                        {formData.segment === "Lucky Draw" && (
+                        {/* Game Show extra fields */}
+                        {formData.segment === "Game Show" && (
                             <div className="space-y-2">
                                 <p className="text-gray-300 font-semibold">
                                     Have you paid the registration fee?
                                 </p>
                                 <div className="flex gap-4">
                                     <label className="flex items-center gap-2">
-                                        <input
-                                            type="radio"
-                                            name="paid"
-                                            value="Yes"
-                                            required
-                                        />
+                                        <input type="radio" name="paid" value="Yes" required />
                                         Yes
                                     </label>
                                     <label className="flex items-center gap-2">
-                                        <input
-                                            type="radio"
-                                            name="paid"
-                                            value="No"
-                                            required
-                                        />
+                                        <input type="radio" name="paid" value="No" required />
                                         No
                                     </label>
                                 </div>
@@ -219,7 +209,7 @@ export default function RegisterPage() {
                                     type="text"
                                     name="receipt"
                                     placeholder="Receipt Number"
-                                    className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none"
                                     required
                                 />
                             </div>
@@ -229,22 +219,17 @@ export default function RegisterPage() {
                             type="text"
                             name="code"
                             placeholder="Unique Code"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none appearance-none autofill:bg-gray-800 focus:bg-gray-800 focus:ring-0"
+                            className="w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-200 outline-none"
                             onChange={handleChange}
                             required
                         />
-
-                        <p className="text-sm text-gray-400">
-                            Note: Send your payment receipt screenshot on WhatsApp to{" "}
-                            <span className="text-yellow-400">+92XXXXXXXXX</span>
-                        </p>
 
                         <button
                             type="submit"
                             className="w-full bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] 
               hover:from-[#F5E0A9]/90 hover:to-[#D4AF37]/90
               shadow-[0_0_15px_rgba(212,175,55,0.7)] 
-              duration-200 hover:bg-yellow-600 cursor-pointer text-gray-900 font-semibold py-3 rounded-lg transition"
+              duration-200 cursor-pointer text-gray-900 font-semibold py-3 rounded-lg transition"
                         >
                             Complete Registration
                         </button>
@@ -259,15 +244,14 @@ export default function RegisterPage() {
                         <h2 className="text-lg font-semibold text-green-400">
                             Your response has been submitted
                         </h2>
-                        {submittedSegment === "Lucky Draw" ? (
+                        {submittedSegment === "Game Show" ? (
                             <p className="text-gray-300 mt-2">
                                 Please send the payment screenshot to{" "}
                                 <span className="text-yellow-400">+92XXXXXXXXX</span>
                             </p>
                         ) : (
                             <p className="text-gray-300 mt-2">
-                                Please send your resume to{" "}
-                                <span className="text-yellow-400">jobs@example.com</span>
+                                Thank you for registering as a Company Representative.
                             </p>
                         )}
                         <p className="text-gray-300 mt-2">

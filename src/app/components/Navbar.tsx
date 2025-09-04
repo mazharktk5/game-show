@@ -15,10 +15,10 @@ export default function Navbar() {
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > lastScrollY) {
-                // scrolling down → hide
+
                 setShow(false);
             } else {
-                // scrolling up → show
+
                 setShow(true);
             }
             setLastScrollY(window.scrollY);
@@ -70,7 +70,7 @@ export default function Navbar() {
                 <div className="hidden md:block">
                     <Link href="/register">
                         <Button className="bg-yellow-400 text-black px-5 cursor-pointer py-2 rounded-lg font-semibold hover:bg-yellow-300 transition">
-                            Register Now
+                            Become a representative
                         </Button>
                     </Link>
                 </div>

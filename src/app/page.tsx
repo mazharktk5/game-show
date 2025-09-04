@@ -1,3 +1,4 @@
+import AboutUs from "./components/aboutUs";
 import Benefits from "./components/Benifits";
 import ChooseSegments from "./components/ChooseSegment";
 import Hero from "./components/Hero";
@@ -7,8 +8,9 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-yellow-900 font-sans">
       {/* Hero Section */}
       <Hero />
-      <ChooseSegments />
+      <AboutUs />
       <Benefits />
+      <ChooseSegments />
 
 
     </main>
