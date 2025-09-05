@@ -1,6 +1,7 @@
 "use client";
 
-import { Briefcase, FileText, TrendingUp, CheckCircle2 } from "lucide-react";
+import { Briefcase, FileText, TrendingUp, CheckCircle2, HeartPulse, Star } from "lucide-react";
+import Link from "next/link";
 
 export default function Benefits() {
     const benefits = [
@@ -24,15 +25,12 @@ export default function Benefits() {
         },
     ];
 
-    const perks = [
-        "Direct access to top employers and recruiters",
-        "Investment guidance from industry experts",
-        "Networking opportunities with successful entrepreneurs",
-        "Career counseling and mentorship programs",
-        "International job placement assistance",
-        "Business development workshops and seminars",
-        "Exclusive investment opportunities",
-        "24/7 support and guidance throughout your journey",
+    const sehatCardBenefits = [
+        "Hospital Discounts with Unique Code",
+        "One-time Purchase: Rs 5000 Only",
+        "Free Health Consultation at Partner Hospitals",
+        "Priority Access to Health Services",
+        "Valid Across Multiple Clinics & Hospitals",
     ];
 
     return (
@@ -49,7 +47,7 @@ export default function Benefits() {
                     Send your CV, Discuss Investment Proposals, Get Maximum Benefits
                 </p>
 
-                {/* Cards */}
+                {/* Regular Cards */}
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-20">
                     {benefits.map((item, index) => (
                         <div
@@ -75,6 +73,56 @@ export default function Benefits() {
                     ))}
                 </div>
 
+                {/* Highlighted Sehat Card */}
+                <div
+                    className="relative bg-gradient-to-br from-[#1a1a1a] via-gray-900 to-black 
+                    rounded-3xl p-10 border-2 border-[#D4AF37] shadow-[0_0_35px_rgba(212,175,55,0.6)]
+                    max-w-4xl mx-auto mb-20"
+                >
+                    <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                        <span className="flex items-center gap-2 px-6 py-2 rounded-full bg-[#D4AF37] text-black font-bold shadow-lg">
+                            <Star className="w-5 h-5" /> Featured
+                        </span>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row items-center gap-10">
+                        <div className="flex-shrink-0">
+                            <HeartPulse className="w-20 h-20 text-[#D4AF37]" />
+                        </div>
+
+                        <div className="text-center lg:text-left">
+                            <h3
+                                className="text-2xl md:text-3xl font-bold mb-4
+                                bg-gradient-to-r from-[#F5E0A9] to-[#D4AF37] bg-clip-text text-transparent"
+                            >
+                                Buy Sehat Card – Rs 5000
+                            </h3>
+                            <p className="text-gray-300 mb-6">
+                                Secure your health with exclusive hospital discounts and benefits. Your unique code will be generated instantly upon purchase.
+                            </p>
+
+                            {/* Sehat Card Benefits */}
+                            <ul className="grid gap-3 mb-6">
+                                {sehatCardBenefits.map((perk, idx) => (
+                                    <li
+                                        key={idx}
+                                        className="flex items-center gap-2 text-gray-300"
+                                    >
+                                        <CheckCircle2 className="w-5 h-5 text-[#D4AF37]" /> {perk}
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <Link
+                                href="/buyform"
+                                className="inline-block px-6 py-3 rounded-lg bg-[#D4AF37] text-black font-semibold text-lg hover:bg-yellow-500 transition"
+                            >
+                                Buy Now
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+
                 {/* What You'll Get Section */}
                 <h3
                     className="text-2xl md:text-3xl font-bold mb-8
@@ -83,7 +131,16 @@ export default function Benefits() {
                     What You'll Get
                 </h3>
                 <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2 max-w-4xl mx-auto text-left">
-                    {perks.map((perk, idx) => (
+                    {[
+                        "Direct access to top employers and recruiters",
+                        "Investment guidance from industry experts",
+                        "Networking opportunities with successful entrepreneurs",
+                        "Career counseling and mentorship programs",
+                        "International job placement assistance",
+                        "Business development workshops and seminars",
+                        "Exclusive investment opportunities",
+                        "24/7 support and guidance throughout your journey",
+                    ].map((perk, idx) => (
                         <li
                             key={idx}
                             className="flex items-start space-x-3 bg-gray-900/50 p-4 rounded-xl 
