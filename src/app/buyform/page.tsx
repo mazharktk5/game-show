@@ -32,7 +32,7 @@ export default function BuyForm() {
         e.preventDefault();
 
 
-        // ✅ Save in MongoDB
+
         await fetch("/api/cards", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

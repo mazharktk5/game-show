@@ -5,7 +5,6 @@ import { useState, FormEvent } from "react";
 export default function HospitalPage() {
     const [uniqueCode, setUniqueCode] = useState("");
     const [details, setDetails] = useState<any>(null);
-    const [stats, setStats] = useState<any>(null);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
@@ -14,7 +13,6 @@ export default function HospitalPage() {
         e.preventDefault();
         setError("");
         setDetails(null);
-        setStats(null);
         setSuccess("");
 
         try {
@@ -23,7 +21,6 @@ export default function HospitalPage() {
 
             if (data.success) {
                 setDetails(data.data);
-                setStats(data.stats);
             } else {
                 setError(data.error || "Record not found");
             }
@@ -50,8 +47,8 @@ export default function HospitalPage() {
                 body: JSON.stringify({
                     uniqueCode: details.uniqueCode,
                     chalanNumber: target.chalanNumber.value,
-                    discountAmount: Number(target.discountAmount.value),
-                    hospitalName: "ABC Hospital",
+                    discountAmount: target.discountAmount.value,
+                    hospitalName: "ABC Hospital", // optional, static for now
                 }),
             });
 
@@ -59,8 +56,6 @@ export default function HospitalPage() {
 
             if (data.success) {
                 setSuccess("Discount reported successfully!");
-                setDetails(data.card);
-                setStats(data.stats);
             } else {
                 setError(data.error || "Failed to submit discount");
             }
@@ -100,26 +95,24 @@ export default function HospitalPage() {
                 {/* Patient Details */}
                 {details && (
                     <div className="bg-gray-800 p-4 rounded-lg border border-gray-700 mb-6">
-                        <h3 className="text-xl font-semibold mb-3 text-[#D4AF37]">Patient Details</h3>
+                        <h3 className="text-xl font-semibold mb-3 text-[#D4AF37]">
+                            Patient Details
+                        </h3>
                         <p><b>Name:</b> {details.name}</p>
                         <p><b>CNIC:</b> {details.cnic}</p>
                         <p><b>Mobile:</b> {details.mobile}</p>
                         <p><b>Email:</b> {details.email}</p>
                         <p><b>Receipt:</b> {details.receiptNumber}</p>
                         <p><b>Unique Code:</b> {details.uniqueCode}</p>
-                        {stats && (
-                            <div className="mt-4 text-sm text-gray-300">
-                                <p><b>Total Visits:</b> {stats.totalVisits}</p>
-                                <p><b>Total Discount Availed:</b> {stats.totalDiscount}</p>
-                            </div>
-                        )}
                     </div>
                 )}
 
-                {/* Discount Form */}
+                {/* Discount Form (only if verified) */}
                 {details && (
                     <form onSubmit={handleDiscountSubmit}>
-                        <h3 className="text-xl font-semibold mb-3 text-[#D4AF37]">Apply Discount</h3>
+                        <h3 className="text-xl font-semibold mb-3 text-[#D4AF37]">
+                            Apply Discount
+                        </h3>
                         <input
                             type="text"
                             name="chalanNumber"
