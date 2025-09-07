@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const MONGO_URI = process.env.MONGO_URI as string;
 
 if (!MONGO_URI) {
-    throw new Error("Please add your Mongo  URI to .env.local");
+    throw new Error("Please add your Mongo URI to .env.local");
 }
 
 let cached = (global as any).mongoose || { conn: null, promise: null };
